@@ -6,6 +6,7 @@ public class CompanyEmpWage {
     public final int noOfWorkingDays;
     public final int maxHrsPerMonth;
     public int totalEmpWage;
+    public int dailyWage[]; //added dailywage
 
     /**
      * Constructor having Parameters.
@@ -26,6 +27,15 @@ public class CompanyEmpWage {
      */
     public void setTotalEmpWage(int totalEmpWage) {
         this.totalEmpWage = totalEmpWage;
+    }
+    /**
+     * Inside this  method for loop will iterate till the size of dailywage array.
+     * print the result with the following message.
+     */
+    public void printDailyWage(){
+        for (int i=0;i<dailyWage.length;i++){
+            System.out.println("Day "+(i+1)+"\t Wage = "+dailyWage[i]);
+        }
     }
     /**
      * THis is an override method which will print the following message.

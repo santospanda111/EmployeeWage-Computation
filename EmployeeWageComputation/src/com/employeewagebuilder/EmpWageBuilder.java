@@ -13,12 +13,11 @@ public class EmpWageBuilder implements EmpWageInterface {
 	
     /**
      * Creating an Arraylist of class CompanyEmpWage named companyEmpWageList.
-     * Inside the constructor it's taking the size of that arraylist.
      */
    
     private ArrayList<CompanyEmpWage> companyEmpWageList;
 
-    public EmpWageBuilder(int n)
+    public EmpWageBuilder()
     {
         companyEmpWageList = new ArrayList<>();
     }
@@ -38,6 +37,7 @@ public class EmpWageBuilder implements EmpWageInterface {
     /**
      * this method will iterate till the size of the arraylist.
      * internally it's calling setTotalEmpWage method by passing integer as parameter.
+     * It's calling printDailywage.
      */
 
     public void computeEmpWage() {
@@ -45,12 +45,14 @@ public class EmpWageBuilder implements EmpWageInterface {
         for (int i = 0; i < companyEmpWageList.size(); i++) {
             CompanyEmpWage companyEmpWage = companyEmpWageList.get(i);
             companyEmpWage.setTotalEmpWage(this.computeEmpWage(companyEmpWage));
+            companyEmpWage.printDailyWage();
             System.out.println(companyEmpWage);
         }
     }
     /**
      * This method will compute the Employee wage.
      * Taking the object of CompanyEmpWage class as a parameter.
+     * 
      * @param companyEmpWage
      * @return
      */
@@ -61,31 +63,28 @@ public class EmpWageBuilder implements EmpWageInterface {
         int fullTimeEmpHrs = 8;
         int empWage=0,totalMonthlyWage=0;
         int totalWorkingHrs=0,totalWorkingDays=0;
+        companyEmpWage.dailyWage = new int[companyEmpWage.noOfWorkingDays];
 
         while (totalWorkingDays < companyEmpWage.noOfWorkingDays && totalWorkingHrs < companyEmpWage.maxHrsPerMonth) {
+        	totalWorkingDays++;
             int empCheck = (int) Math.floor(Math.random() * 10) % 3;
             switch (empCheck) {
             
                 case 0:
                     System.out.println("Employee is absent");
+                   
                     break;
 
                 case 1:
                     System.out.println("Employee is Present");
-                    empWage = Math.multiplyExact(fullTimeEmpHrs, empRatePerHr);
-                    System.out.println("Employee Daily Wage is :" + empWage);
                     totalWorkingHrs = totalWorkingHrs + 8;
-                    totalWorkingDays = totalWorkingDays++;
                     break;
                 case 2:
                     System.out.println("Employee is Present but Half-Time");
-                    empWage = Math.multiplyExact(partTimeEmpHr, empRatePerHr);
-                    System.out.println("Employee's Part-Time Wage is :" + empWage);
-                    totalWorkingHrs = totalWorkingHrs + 4;
-                    totalWorkingDays = totalWorkingDays++;
+                    totalWorkingHrs = totalWorkingHrs + 4;              
                     break;
             }
-            totalMonthlyWage = totalMonthlyWage + empWage;
+            companyEmpWage.dailyWage[totalWorkingDays-1] = totalWorkingHrs * companyEmpWage.empRatePerHr;
         }
         return totalWorkingHrs * companyEmpWage.empRatePerHr;
     }
@@ -94,15 +93,14 @@ public class EmpWageBuilder implements EmpWageInterface {
         System.out.println("Welcome to Employee Wage Computation Program...");
 
         int num;
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter No. of Companies");
-        num = scanner.nextInt();
+        Scanner scanner = new Scanner(System.in);;
+        System.out.println("Enter the No. of Company to Compute: ");
+        num=scanner.nextInt();
         /**
          * here i have created an object of empwagebuilder class using EmpWageInterface.
          * Interface can store values of subclass.
-         * taking num as a parameter for the constructor.
          */
-        EmpWageInterface empWageBuilder = new EmpWageBuilder(num);
+        EmpWageInterface empWageBuilder = new EmpWageBuilder();
         /**
          * this for loop will iterate till size of num given as input.
          * it will take input and store in addCompanyEmpWage method.
