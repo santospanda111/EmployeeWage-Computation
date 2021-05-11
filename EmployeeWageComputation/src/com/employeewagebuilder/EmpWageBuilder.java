@@ -1,6 +1,7 @@
 package com.employeewagebuilder;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * EmpWageBuilder class implements interface methods.
@@ -16,10 +17,13 @@ public class EmpWageBuilder implements EmpWageInterface {
      */
    
     private ArrayList<CompanyEmpWage> companyEmpWageList;
+    private HashMap<String,CompanyEmpWage> companyToEmpWage;
 
     public EmpWageBuilder()
     {
         companyEmpWageList = new ArrayList<>();
+        companyToEmpWage = new HashMap<>();
+        
     }
 
     /**
@@ -33,6 +37,10 @@ public class EmpWageBuilder implements EmpWageInterface {
     public void addCompanyEmpWage(String company, int empRatePerHr, int noOfWorkingDays, int maxHrsPerMonth) {
     	CompanyEmpWage companyEmpWage = new CompanyEmpWage(company, empRatePerHr, noOfWorkingDays,maxHrsPerMonth);
     	companyEmpWageList.add(companyEmpWage);
+    	/**
+    	 * here the hashmap will put all the datas as key(Company nmae) value(CompanyEmpWage) pairs.
+    	 */
+    	companyToEmpWage.put(company,companyEmpWage);
     }
     /**
      * this method will iterate till the size of the arraylist.
@@ -88,6 +96,13 @@ public class EmpWageBuilder implements EmpWageInterface {
         }
         return totalWorkingHrs * companyEmpWage.empRatePerHr;
     }
+    /**
+     * this method will take company name as a parameter.
+     * According to the company name it will get the total emp wage.
+     */
+    public int getTotalWage(String companyname){
+        return companyToEmpWage.get(companyname).totalEmpWage;
+    }
 
     public static void main(String[] args){
         System.out.println("Welcome to Employee Wage Computation Program...");
@@ -120,6 +135,12 @@ public class EmpWageBuilder implements EmpWageInterface {
         }
         System.out.println("");
         empWageBuilder.computeEmpWage();
+        /**
+         * This will take Company name as user input and give output the total emp-wage.
+         */
+        System.out.println("Enter Company Name: ");
+        System.out.println("Employee Wage: "+empWageBuilder.getTotalWage(scanner.next()));
+
 	}
 
 }
