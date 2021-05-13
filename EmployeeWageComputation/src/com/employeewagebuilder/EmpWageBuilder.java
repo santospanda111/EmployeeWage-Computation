@@ -14,6 +14,7 @@ public class EmpWageBuilder implements EmpWageInterface {
 	
     /**
      * Creating an Arraylist of class CompanyEmpWage named companyEmpWageList.
+     * Added hashmap to store values in key value pair and to get the value by using key.
      */
    
     private ArrayList<CompanyEmpWage> companyEmpWageList;
@@ -38,7 +39,7 @@ public class EmpWageBuilder implements EmpWageInterface {
     	CompanyEmpWage companyEmpWage = new CompanyEmpWage(company, empRatePerHr, noOfWorkingDays,maxHrsPerMonth);
     	companyEmpWageList.add(companyEmpWage);
     	/**
-    	 * here the hashmap will put all the datas as key(Company nmae) value(CompanyEmpWage) pairs.
+    	 * here the hashmap will put all the datas as key(Company name) value(CompanyEmpWage) pairs.
     	 */
     	companyToEmpWage.put(company,companyEmpWage);
     }
@@ -67,9 +68,7 @@ public class EmpWageBuilder implements EmpWageInterface {
     public int computeEmpWage(CompanyEmpWage companyEmpWage) {
         // Variables
         int partTimeEmpHr=4;
-        int empRatePerHr = 20;
         int fullTimeEmpHrs = 8;
-        int empWage=0,totalMonthlyWage=0;
         int totalWorkingHrs=0,totalWorkingDays=0;
         companyEmpWage.dailyWage = new int[companyEmpWage.noOfWorkingDays];
 
